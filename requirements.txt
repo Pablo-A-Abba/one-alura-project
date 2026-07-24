@@ -1,0 +1,10 @@
+langchain
+langchain-core
+langchain-community
+langchain-google-genai
+google-generativeai
+langchain-groq
+langchain_huggingface
+"unstructured[pdf]"
+langchain-text-splitters
+chromadb
