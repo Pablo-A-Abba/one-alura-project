@@ -9,6 +9,9 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 import config
 
@@ -33,7 +36,13 @@ class rag_gestor():
       return model
    
     def data_loader(self,file_dir):
-      docs = DirectoryLoader(file_dir, glob="*.pdf").load()
+      from pathlib import Path
+      from langchain_community.document_loaders import PyPDFLoader
+
+      docs = []
+
+      for pdf in Path(file_dir).glob("*.pdf"):
+          docs.extend(PyPDFLoader(str(pdf)).load())
       return docs
   
   
@@ -52,7 +61,7 @@ class rag_gestor():
       # De todas formas se deja el codigo para realizar embedings con gemini
       # en caso de que se desee probar como responderian el rag.
       if embedding_choice == "free":
-        emb_model = HuggingFaceEmbeddings(model_name=config.HF_EMBEDDING_MODEL)
+        emb_model = HuggingFaceEmbeddings(model_name=config.HF_EMBEDDING_MODEL,encode_kwargs={"token": os.environ['HF_TOKEN']})
       else:
         emb_model = GoogleGenerativeAIEmbeddings(
             model=config.GEMINI_EMBEDDING_MODEL,

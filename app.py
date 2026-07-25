@@ -1,16 +1,17 @@
 from rag import rag_gestor
+import config
 
 def main():
     llm = rag_gestor()
     print("Cargando documentos...")
-    documents = llm.data_loader(PDF_DIR)
+    documents = llm.data_loader(config.PDF_DIR)
     print(f"  {len(documents)} elementos cargados.")
 
     print("Dividiendo en chunks...")
     chunks = llm.data_splitter(documents)
     print(f"  {len(chunks)} chunks generados.")
 
-    print("Generando/cargando embeddings de Gemini...")
+    print("Generando/cargando embeddings...")
     embeddings = llm.get_embeddings()
 
     print("Construyendo vector store...")

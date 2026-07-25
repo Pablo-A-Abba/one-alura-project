@@ -5,6 +5,9 @@ langchain-google-genai
 google-generativeai
 langchain-groq
 langchain_huggingface
-"unstructured[pdf]"
+unstructured[pdf]
 langchain-text-splitters
 chromadb
+streamlit
+sentence-transformers
+python-dotenv
