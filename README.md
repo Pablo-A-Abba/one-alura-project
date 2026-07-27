@@ -93,8 +93,8 @@ Ambas interfaces (`app.py` y `cli.py`) consumen la misma clase `rag_gestor`, por
 
 **Entorno Vitual Python**
 ```bash
-git clone <url-del-repositorio>
-cd <nombre-del-proyecto>
+git clone git@github.com:Pablo-A-Abba/one-alura-project.git
+cd one-alura-project
 
 python -m venv .venv
 # Windows
@@ -107,16 +107,12 @@ pip install -r requirements.txt
 
 **Dockerfile**
 ```bash
-git clone <url-del-repositorio>
-cd <nombre-del-proyecto>
+git clone git@github.com:Pablo-A-Abba/one-alura-project.git
+cd one-alura-project
 
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# Linux / Mac
-source .venv/bin/activate
+docker build . -t santos-pegasus-rag -f Dockerfile
 
-pip install -r requirements.txt
+docker run -p 8501:8501 --env-file .env --rm santos-pegasus-rag
 ```
 
 ### 3. Configurar variables de entorno
@@ -147,7 +143,7 @@ streamlit run app.py
 
 ### 6. Opciones de línea de comandos
 
-El proyecto permite elegir qué proveedor usar para el LLM y los embeddings mediante argumentos:
+El proyecto permite elegir qué proveedor usar para el LLM y los embeddings (actualmente solo utiliza dos: los modelos de Gemini para ambos casos y, por defecto, utiliza Groq como modelo de LLM y BAAI/bge-m3 de Hugging Face como modelo de embeddings) mediante argumentos:
 
 **Modo consola (CLI):**
 ```bash
