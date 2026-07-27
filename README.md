@@ -87,9 +87,25 @@ Ambas interfaces (`app.py` y `cli.py`) consumen la misma clase `rag_gestor`, por
 - Python 3.13 instalado.
 - Una clave de API de [Groq](https://console.groq.com/) y/o de [Google AI Studio](https://aistudio.google.com/) (Gemini), según qué proveedor pienses usar.
 - (Opcional) Un token de [Hugging Face](https://huggingface.co/settings/tokens) si vas a usar el modelo de embeddings gratuito.
+- (Opcional) Docker instalado.
 
 ### 2. Clonar el repositorio e instalar dependencias
 
+**Entorno Vitual Python**
+```bash
+git clone <url-del-repositorio>
+cd <nombre-del-proyecto>
+
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# Linux / Mac
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+**Dockerfile**
 ```bash
 git clone <url-del-repositorio>
 cd <nombre-del-proyecto>
@@ -164,6 +180,7 @@ Si no se pasa ningún argumento, el sistema usa por defecto **Groq** como LLM y 
 
 ## 💬 Ejemplos de preguntas que el agente puede responder
 
+- "¿Quien sos?"
 - "¿Cuáles son los pasos para hacer un rollback en un incidente de severidad alta?"
 - "¿Qué patrones arquitectónicos se usan en el back-end con Spring Boot?"
 - "¿Cómo configuro mi entorno local de desarrollo el primer día?"
@@ -181,22 +198,32 @@ Si no se pasa ningún argumento, el sistema usa por defecto **Groq** como LLM y 
 
 **Pregunta:**
 ```
-[completar]
+¿Quien sos?
 ```
 
 **Respuesta:**
 ```
-[completar]
+Soy el asistente interno de documentación técnica de Santo Pegasus, encargado de proporcionar respuestas a consultas de empleados basadas exclusivamente en la documentación oficial de la empresa. Mi función es brindar información precisa y técnica sobre temas relacionados con la arquitectura de microservicios, ingeniería back-end y front-end, onboarding, protocolos de incidentes y otros temas cubiertos por los documentos oficiales de la empresa. Estoy aquí para ayudarte con cualquier consulta técnica que tengas, siempre dentro del marco de la documentación disponible.
 ```
 
 ---
 
 **Pregunta:**
 ```
-[completar]
+¿Cuáles son los pasos para hacer un rollback en un incidente de severidad alta?
 ```
 
 **Respuesta:**
 ```
-[completar]
+Según el Protocolo de Respuesta a Incidentes y Post-Mortems, en caso de un incidente de severidad alta, los pasos para realizar un rollback están definidos de la siguiente manera:
+
+Detección y alerta: El sistema de monitoreo debe detectar el incidente y alertar a los equipos correspondientes.
+Rol de respuesta: Los roles definidos durante el incidente, como el líder de incidentes y los equipos de respuesta, deben ser notificados y activados.
+Proceso de respuesta: El equipo de respuesta debe seguir el proceso de respuesta definido en el protocolo, que incluye la evaluación del incidente, la identificación de la causa raíz y la implementación de una solución.
+Rollback en Docker y AWS ECS: En caso de que el incidente esté relacionado con un cambio en la infraestructura o en el código, se debe realizar un rollback en Docker y AWS ECS siguiendo los pasos definidos en el protocolo.
+Es importante mencionar que el protocolo establece que el rollback debe ser realizado de manera controlada y segura, y que se deben seguir los procedimientos definidos para minimizar el impacto en el sistema y en los usuarios.
+
+Además, según el protocolo, después de realizar el rollback, se debe realizar un post-mortem para analizar el incidente y identificar las causas raíz, con el fin de evitar que se repita en el futuro.
+
+Es importante consultar el Protocolo de Respuesta a Incidentes y Post-Mortems para obtener más información detallada sobre los pasos para realizar un rollback en un incidente de severidad alta.
 ```
