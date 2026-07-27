@@ -64,7 +64,7 @@ class rag_gestor():
           task_type="retrieval_document"
         )
       else:
-        model_kwargs = {}
+        model_kwargs = {'device': 'cpu'}
         token = os.environ.get('HF_TOKEN')
         if token:
             model_kwargs["token"] = token

@@ -110,9 +110,7 @@ pip install -r requirements.txt
 git clone git@github.com:Pablo-A-Abba/one-alura-project.git
 cd one-alura-project
 
-docker build . -t santos-pegasus-rag -f Dockerfile
-
-docker run -p 8501:8501 --env-file .env --rm santos-pegasus-rag
+No es necesario crear el entorno virtual de Python ya que todas las dependencias se van a quedar dentro de los archivos de docker, aunque si desea que no aparezcan errores de importacion puede crearlo sin problemas
 ```
 
 ### 3. Configurar variables de entorno
@@ -141,6 +139,15 @@ python cli.py
 streamlit run app.py
 ```
 
+**Dockerfile**
+```bash
+docker build . -t santos-pegasus-rag -f Dockerfile
+
+docker run -p 8501:8501 --env-file .env --rm santos-pegasus-rag
+
+#El 
+```
+
 ### 6. Opciones de línea de comandos
 
 El proyecto permite elegir qué proveedor usar para el LLM y los embeddings (actualmente solo utiliza dos: los modelos de Gemini para ambos casos y, por defecto, utiliza Groq como modelo de LLM y BAAI/bge-m3 de Hugging Face como modelo de embeddings) mediante argumentos:
@@ -163,11 +170,25 @@ python cli.py --emb gemini
 streamlit run app.py -- --allgem
 
 # Usar Gemini solo como LLM (embeddings quedan en modo gratuito/local)
-
 streamlit run app.py -- --llm gemini
 
 # Usar Gemini solo para embeddings (LLM queda en Groq)
 streamlit run app.py -- --emb gemini
+```
+
+**Dockerfile (Streamlit):**
+
+Tome en cuenta que el comando elegido debe de sobreescribir la linea 26 del archivo Dockerfile y correr el archivo como se indica en la ejecución del asistente.
+
+```bash
+# Usar Gemini tanto para el LLM como para los embeddings
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0","--", "--allgem"]
+
+# Usar Gemini solo como LLM (embeddings quedan en modo gratuito/local)
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--", "--llm", "gemini"]
+
+# Usar Gemini solo para embeddings (LLM queda en Groq)
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--", "--emb", "gemini"]
 ```
 
 Si no se pasa ningún argumento, el sistema usa por defecto **Groq** como LLM y **Hugging Face (local, gratuito)** para los embeddings.
