@@ -2,18 +2,21 @@ from rag import rag_gestor
 import streamlit as st
 import config
 
+@st.cache_resource(show_spinner=False)
 def build_pipeline(options:dict):
     """Arma el pipeline completo del RAG: carga documentos, genera embeddings,
-    construye el vector store y prepara la chain lista para responder consultas."""
+    construye el vector store y prepara la chain lista para responder consultas.
+
+    Decorado con @st.cache_resource para que se ejecute una sola vez por proceso,
+    incluso a través de múltiples reruns de Streamlit."""
     rag_gen = rag_gestor()
 
-    with st.spinner("Cargando documentos y preparando el asistente..."):
-        documents = rag_gen.data_loader(config.PDF_DIR)
-        chunks = rag_gen.data_splitter(documents)
-        embeddings = rag_gen.get_embeddings(options['emb'])
-        vectordb = rag_gen.generate_vector_store(chunks, embeddings)
-        llm = rag_gen.get_llm(options['llm'])
-        rag_chain = rag_gen.build_rag_chain(vectordb, llm)
+    documents = rag_gen.data_loader(config.PDF_DIR)
+    chunks = rag_gen.data_splitter(documents)
+    embeddings = rag_gen.get_embeddings(options['emb'])
+    vectordb = rag_gen.generate_vector_store(chunks, embeddings)
+    llm = rag_gen.get_llm(options['llm'])
+    rag_chain = rag_gen.build_rag_chain(vectordb, llm)
 
     return rag_chain
 
@@ -46,10 +49,6 @@ def streamlit_page(options:dict):
     no está cubierto, el asistente te lo va a indicar en vez de inventar una respuesta.
     """)
 
-    # Cachea el pipeline para no reconstruir el vector store en cada interacción
-    if "rag_chain" not in st.session_state:
-        st.session_state.rag_chain = build_pipeline(options)
-
     st.markdown("---")
     st.markdown("## 💬 Consultá la documentación interna")
 
@@ -61,6 +60,12 @@ def streamlit_page(options:dict):
         if not question.strip():
             st.warning("Escribí una pregunta antes de enviar.")
         else:
+            # El pipeline se construye recién cuando se envía la primera consulta,
+            # y queda cacheado (@st.cache_resource) para las siguientes preguntas.
+            if "rag_chain" not in st.session_state:
+                with st.spinner("Inicializando el asistente por primera vez: cargando documentos y generando embeddings... esto puede tardar unos segundos."):
+                    st.session_state.rag_chain = build_pipeline(options)
+
             with st.spinner("Buscando en la documentación 🦜"):
                 response = st.session_state.rag_chain.invoke(question)
                 st.markdown("### Respuesta")
