@@ -248,5 +248,5 @@ Es importante consultar el Protocolo de Respuesta a Incidentes y Post-Mortems pa
 
 Debido a problemas que se tuvieron con distintas plataformas de infraestructura y servicios como AWS, OCI, Railway, entre otros, se opto por subir el proyecto a la plataforma de Streamlit para la revisión de su funcionamiento en la nube.
 
-** 🔗 Link:**
+**🔗 Link:**
 https://santopegasusrag.streamlit.app/
