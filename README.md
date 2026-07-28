@@ -211,8 +211,6 @@ Si no se pasa ningún argumento, el sistema usa por defecto **Groq** como LLM y 
 
 ## 🧪 Ejemplos de respuestas generadas por el agente
 
-> _Sección a completar con capturas o transcripciones reales de la aplicación en funcionamiento._
-
 **Pregunta:**
 ```
 ¿Quien sos?
@@ -244,3 +242,11 @@ Además, según el protocolo, después de realizar el rollback, se debe realizar
 
 Es importante consultar el Protocolo de Respuesta a Incidentes y Post-Mortems para obtener más información detallada sobre los pasos para realizar un rollback en un incidente de severidad alta.
 ```
+---
+
+## ☁️ Link de Proyecto Publicado
+
+Debido a problemas que se tuvieron con distintas plataformas de infraestructura y servicios como AWS, OCI, Railway, entre otros, se opto por subir el proyecto a la plataforma de Streamlit para la revisión de su funcionamiento en la nube.
+
+** 🔗 Link:**
+https://santopegasusrag.streamlit.app/
